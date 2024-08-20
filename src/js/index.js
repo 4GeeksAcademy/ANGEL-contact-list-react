@@ -7,10 +7,14 @@ import "../styles/index.css";
 
 //import your own components
 import Layout from './layout.js'
-
+import Provider from './store/appContext.js';
 //
 const root = createRoot(document.querySelector("#app"))
 
 //render your react application
-root.render(<Layout/>)
+root.render(
+    <Provider>
+        <Layout/>
+    </Provider>
+)
 

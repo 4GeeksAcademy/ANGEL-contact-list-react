@@ -1,3 +1,89 @@
-/* 
-    General Styles
-*/
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
+
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding-right: 2rem;
+}
+.btn-home{
+    background-color: green;
+    color: white;
+    padding: 1rem 2rem;
+}
+main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+}
+.contact{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid lightgray;
+}
+.contact-info{
+    display: flex;
+    align-items: center;
+}
+.contact-info-text{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+img-contact{
+    border-radius: 50px;
+}
+.form-div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    row-gap: 2rem;
+}
+.form div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.form-title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+}
+.btn-form-save{
+    background-color: #1779F2;
+    border: none;
+    color: white;
+    padding: 0.5rem 0;
+    margin-top: 1rem;
+}
+.btn-form-return{
+    width: 60%;
+    
+}
+.btn-form-return button{
+    background: transparent;
+    border: none;
+}
+.btn-form-return button:hover{
+    color: blue;
+    text-decoration: underline;
+}

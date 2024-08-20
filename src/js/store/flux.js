@@ -1,43 +1,54 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			agendName: "",
+			contacts: []
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			loadAgend: () => {
+				const AGEND_NAME = 'https://playground.4geeks.com/contact/agendas/AngelSv'
+				fetch(AGEND_NAME)
+				.then(async res => {
+					if(res.ok){
+						return res.json()
+					}else if(res.status === 404){
+						const res_1 = await fetch(AGEND_NAME, {
+							method: 'POST',
+							headers: {
+								'Content-type': 'application/json'
+							},
+							body: JSON.stringify({ 'slug': 'AngelSv' })
+						});
+						return await res_1.json();
+					}else{
+						throw new Error("Error al obtener la agenda")
+					}
+				})
+				.then(data => {
+					setStore({
+						agendName: data.slug,
+						contacts: data.contacts
+					})
+				})
+				.catch(error => console.error('Error:', error))
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+			addNewContact: (newContact) => {
+				fetch('https://playground.4geeks.com/contact/agendas/AngelSv/contacts', {
+					method: "POST",
+					headers : {
+						'Content-type': 'application/json'
+					},
+					body : JSON.stringify(newContact)
+				})
+				.then(res => res.json())
+				.then(data => {
+					setStore({
+						contacts: [...store.contacts, data]
+					})
+				})
+				.catch(error => console.error("Error:", error))
 			}
+
 		}
 	};
 };

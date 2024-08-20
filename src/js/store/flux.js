@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			contacts: []
 		},
 		actions: {
+			//Listar contactos
 			loadAgend: () => {
 				const AGEND_NAME = 'https://playground.4geeks.com/contact/agendas/AngelSv'
 				fetch(AGEND_NAME)
@@ -32,6 +33,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch(error => console.error('Error:', error))
 			},
+			
+			//Añadir contacto
 			addNewContact: (newContact) => {
 				fetch('https://playground.4geeks.com/contact/agendas/AngelSv/contacts', {
 					method: "POST",
@@ -47,8 +50,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				})
 				.catch(error => console.error("Error:", error))
-			}
+			},
 
+			//Eliminar contacto
+			deleteContact: (id) => {
+				fetch(`https://playground.4geeks.com/contact/agendas/AngelSv/contacts/${id}`, {
+					method: 'DELETE',
+				})
+				.then(res => {
+					if(!res.ok){
+						throw new Error("Error al eliminar contacto")
+					}
+					getActions().loadAgend()
+				})
+				.catch(error => {
+					console.error('Error', error)
+				})
+			},
+
+			//Editar contacto
+			updateContact: (id, updatedContact) => {
+				fetch(`https://playground.4geeks.com/contact/agendas/AngelSv/contacts/${id}`,{
+					method: 'PUT',
+					headers: {
+						'Content-type': 'application/json'
+					},
+					body: JSON.stringify(updatedContact)
+				})
+				.then(res => res.json())
+				.then(data => {
+					const store = getStore()
+					const updateContacts = store.contacts.map(contact => 
+						contact.id === id ? data : contact
+					)
+					setStore({contacts: updateContacts})
+				})
+				.catch(error => {
+					console.error("Error al actualizar contacto: ", error)
+				})
+			}
 		}
 	};
 };

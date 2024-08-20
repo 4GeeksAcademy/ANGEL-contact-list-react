@@ -45,15 +45,15 @@ export function FormContact() {
                 </div>
                 <div>
                     <label>Address</label>
-                    <input type="text" value={address || ""} onChange={(e) => setAddress(e.target.value)} placeholder="Enter email"/>
+                    <input type="text" value={address || ""} onChange={(e) => setAddress(e.target.value)} placeholder="Enter adress"/>
                 </div>
                 <div>
                     <label>Email</label>
-                    <input type="text" value={email || ""} onChange={(e) => setEmail(e.target.value)} placeholder="Enter phone"/>
+                    <input type="text" value={email || ""} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email"/>
                 </div>
                 <div>
                     <label>Phone</label>
-                    <input type="number" value={phone || ""} onChange={(e) => setPhone(e.target.value)} placeholder="Enter name"/>
+                    <input type="number" value={phone || ""} onChange={(e) => setPhone(e.target.value)} placeholder="Enter phone"/>
                 </div>
                 <button className="btn-form-save">Save</button>
             </form>

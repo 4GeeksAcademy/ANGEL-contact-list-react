@@ -23,6 +23,7 @@ export function Home(){
                     return(
                         <Contact 
                         key={item.id}
+                        id={item.id}
                         name={item.name}
                         address={item.address}
                         tel={item.phone}

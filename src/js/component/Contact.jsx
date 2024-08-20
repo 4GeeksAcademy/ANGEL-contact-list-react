@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../store/appContext";
+import ModalUpdate from "./ModalUpdate.jsx";
 
-export default function Contact({name, address, tel, email}) {
+export default function Contact({id, name, address, tel, email}) {
+
+    const { actions } = useContext(Context)
+    const [showModal, setShowModal] = useState(false)
+
+    const deleteContact = () => {
+        actions.deleteContact(id)
+    }
+
+    const handleEdit = () => {
+        setShowModal(true)
+    }
+    const closeModal = () => {
+        setShowModal(false)
+    }
+
     return(
         <>
             <div className="contact">
@@ -14,10 +31,20 @@ export default function Contact({name, address, tel, email}) {
                     </div>
                 </div>
                 <div className="contact-actions">
-                    <button>Editar</button>
-                    <button>Eliminar</button>
+                    <button onClick={handleEdit}>Editar</button>
+                    <button onClick={() => deleteContact()}>Eliminar</button>
                 </div>
             </div>
+            {showModal && (
+                <ModalUpdate
+                    id={id}
+                    name={name}
+                    address={address}
+                    email={email}
+                    tel={tel}
+                    onClose={closeModal}
+                />
+            )}
         </>
     )
 }

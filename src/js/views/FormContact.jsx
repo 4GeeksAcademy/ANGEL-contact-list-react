@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
-import { number } from "prop-types";
 
 export function FormContact() {
 
@@ -29,6 +28,9 @@ export function FormContact() {
         setEmail("")
         setPhone("")
         setAddress("")
+         
+        actions.loadAgend()
+        navigate('/home')
     }
 
 

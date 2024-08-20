@@ -1,22 +1,32 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import ModalUpdate from "./ModalUpdate.jsx";
+import ModalDelete from "./ModalDelete.jsx";
 
 export default function Contact({id, name, address, tel, email}) {
 
     const { actions } = useContext(Context)
-    const [showModal, setShowModal] = useState(false)
+    const [showModalEdit, setShowModalEdit] = useState(false)
+    const [showModalDelete, setShowModalDelete] = useState(false)
 
-    const deleteContact = () => {
+    
+    const openModalEdit = () => {
+        setShowModalEdit(true)
+    }
+    const closeModalEdit = () => {
+        setShowModalEdit(false)
+    }
+
+    const openModalDelete = () => {
+        setShowModalDelete(true)
+    }
+    const closeModalDelete = () => {
+        setShowModalDelete(false)
+    }
+    const handleDelete = useCallback(() => {
         actions.deleteContact(id)
-    }
-
-    const handleEdit = () => {
-        setShowModal(true)
-    }
-    const closeModal = () => {
-        setShowModal(false)
-    }
+        closeModalDelete()
+    }, [actions, id])
 
     return(
         <>
@@ -31,18 +41,25 @@ export default function Contact({id, name, address, tel, email}) {
                     </div>
                 </div>
                 <div className="contact-actions">
-                    <button onClick={handleEdit}>Editar</button>
-                    <button onClick={() => deleteContact()}>Eliminar</button>
+                    <button onClick={openModalEdit}>Editar</button>
+                    <button onClick={() => openModalDelete()}>Eliminar</button>
                 </div>
             </div>
-            {showModal && (
+            {showModalEdit && (
                 <ModalUpdate
                     id={id}
                     name={name}
                     address={address}
                     email={email}
                     tel={tel}
-                    onClose={closeModal}
+                    onClose={closeModalEdit}
+                />
+            )}
+            {showModalDelete && (
+                <ModalDelete
+                    id={id}
+                    onClose={closeModalDelete}
+                    onDelete={handleDelete}
                 />
             )}
         </>

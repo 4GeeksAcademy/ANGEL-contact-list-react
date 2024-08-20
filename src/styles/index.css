@@ -128,3 +128,30 @@ img-contact{
     padding: 0.5rem 0;
     margin-top: 1rem;
 }
+.modal-delete{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0;
+    row-gap: 5rem;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+.modal-delete-buttons{
+    display: flex;
+    column-gap: 4rem;
+}
+.modal-delete-btn-delete{
+    padding: 0.5rem 4rem;
+    border: none;
+    background-color: red;
+    color: white;
+}
+.modal-delete-btn-close{
+    padding: 0.5rem 4rem;
+    border: none;
+    background-color: gray;
+    color: black;
+}

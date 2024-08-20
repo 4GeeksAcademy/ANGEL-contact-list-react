@@ -3,28 +3,36 @@ import { Context } from "../store/appContext";
 
 export default function ModalUpdate({id, name, address, email, tel, onClose}) {
 
-    const [fullName, setFullName] = useState(name)
-    const [updatedAddress, setUpdatedAddress] = useState(address)
-    const [updatedEmail, setUpdatedEmail] = useState(email)
-    const [phone, setPhone] = useState(tel)
+    const [form, setForm] = useState({
+        name: name,
+        address: address,
+        email: email,
+        phone: tel
+    })
 
     const { actions } = useContext(Context)
 
-    const handleSubmit = async (e) => {
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setForm((prevForm) => ({
+            ...prevForm, [name] :value
+        }))
+    }
+
+    const handleSubmit = (e) => {
         e.preventDefault()
 
         const updatedContact = {
-            name: fullName,
-            address: updatedAddress,
-            email: updatedEmail,
-            phone: phone,
+            name: form.name,
+            address: form.address,
+            email: form.email,
+            phone: form.phone,
             agenda_slug: "AngelSv"
         }
 
         actions.updateContact(id, updatedContact)
         onClose()
     }
-
 
     return(
         <div className="modal-container">
@@ -36,19 +44,19 @@ export default function ModalUpdate({id, name, address, email, tel, onClose}) {
                         </div>
                         <div>
                             <label>Full Name</label>
-                            <input type="text" value={fullName || ""} onChange={(e) => setFullName(e.target.value)} placeholder="Full name" />
+                            <input name="name" type="text" value={form.name || ""} onChange={handleChange} placeholder="Full name" />
                         </div>
                         <div>
                             <label>Address</label>
-                            <input type="text" value={updatedAddress || ""} onChange={(e) => setUpdatedAddress(e.target.value)} placeholder="Enter address"/>
+                            <input name="address" type="text" value={form.address || ""} onChange={handleChange} placeholder="Enter address"/>
                         </div>
                         <div>
                             <label>Email</label>
-                            <input type="text" value={updatedEmail || ""} onChange={(e) => setUpdatedEmail(e.target.value)} placeholder="Enter email"/>
+                            <input name="email" type="text" value={form.email || ""} onChange={handleChange} placeholder="Enter email"/>
                         </div>
                         <div>
                             <label>Phone</label>
-                            <input type="number" value={phone || ""} onChange={(e) => setPhone(e.target.value)} placeholder="Enter phone"/>
+                            <input name="phone" type="number" value={form.phone || ""} onChange={handleChange} placeholder="Enter phone"/>
                         </div>
                         <button type="submit" className="btn-form-save">Save</button>
                     </form>
